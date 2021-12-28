@@ -4,15 +4,14 @@ title: About
 permalink: /about/
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](https://jekyllrb.com/)
+With 12+ years of hands on experience in academic, research and clinical settings working with genomic and clinical data, I bring broad spectrum of skills ranging from,
 
-You can find the source code for Minima at GitHub:
-[jekyll][jekyll-organization] /
-[minima](https://github.com/jekyll/minima)
+1) Data Engineering - full stack web development (Angular/Python Flask/Nginx); wide variety of database technologies from traditional SQL (SQLServer, MySQL, Postgres) to graph (Neo4j) to horizontally scalable (Cassandra) databases; building microservice architecture based scalable pipelines (Docker + Beam); event-driven realtime data processing (Kafka).
 
-You can find the source code for Jekyll at GitHub:
-[jekyll][jekyll-organization] /
-[jekyll](https://github.com/jekyll/jekyll)
+2) Data Science - machine learning (decision trees, random forest, XGBoost using Python Scikit Learn); deep learning (Python Keras and Tensorflow).
 
+3) Dev/Ops - Kubernetes, Apache Spark + HDFS cluster deployment and management.
 
-[jekyll-organization]: https://github.com/jekyll
+Creative and goal oriented, I take immense pride in end-to-end automation of operational tasks and a big believer of the quote "you don't know it until you teach it to a computer".
+
+Looking forward to the opportunities to prove and enhance my leadership and technical expertise.
