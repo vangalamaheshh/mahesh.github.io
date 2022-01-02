@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Resume
-pdf_file: "/assets/resume.pdf"
+pdf_file: "https://github.com/vangalamaheshh/vangalamaheshh.github.io/blob/main/assets/resume.pdf"
 permalink: /resume/
 ---
 
