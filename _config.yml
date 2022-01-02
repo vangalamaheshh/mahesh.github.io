@@ -31,7 +31,6 @@ github_username: vangalamaheshh
 theme: minima
 plugins:
   - jekyll-feed
-  - jekyll-pdf-embed
 
 # Exclude from processing.
 # The following items will not be processed, by default.

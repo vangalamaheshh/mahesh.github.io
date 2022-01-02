@@ -5,4 +5,4 @@ pdf_file: "https://github.com/vangalamaheshh/vangalamaheshh.github.io/blob/main/
 permalink: /resume/
 ---
 
-{% pdf {{ page.pdf_file }} %}
+<!--{% pdf {{ page.pdf_file }} %}-->
