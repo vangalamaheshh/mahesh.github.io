@@ -31,6 +31,10 @@ github_username: vangalamaheshh
 theme: minima
 plugins:
   - jekyll-feed
+  - jemoji
+
+emoji:
+  src: "https://github.githubassets.com/images/icons/"
 
 # Exclude from processing.
 # The following items will not be processed, by default.
