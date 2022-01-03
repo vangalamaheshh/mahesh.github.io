@@ -125,22 +125,22 @@ Happy Coding!! :+1:
     <h4 class="share-heading">Liked it? Please share the post.</h4>
 
     <div class="share-buttons">
-        <a class="horizontal-share-buttons" href="https://www.facebook.com/sharer/sharer.php?u={{site.url}}{{page.url}}"
+        <a class="horizontal-share-buttons" href="https://www.facebook.com/sharer/sharer.php?u=https://vangalamaheshh.github.io{{page.url}}"
             onclick="gtag('event', 'Facebook', {'event_category':'Post Shared','event_label':'Facebook'}); window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"
             title="Share on Facebook" >
             <span class="icon-facebook2">Facebook</span>
         </a>
-        <a  class="horizontal-share-buttons" href="https://twitter.com/intent/tweet?text=Apache-Spark Installation&url={{site.url}}{{page.url}}"
+        <a  class="horizontal-share-buttons" href="https://twitter.com/intent/tweet?text=Apache-Spark Installation&url=https://vangalamaheshh.github.io{{page.url}}"
             onclick="gtag('event', 'Twitter', {'event_category':'Post Shared','event_label':'Twitter'}); window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"
             title="Share on Twitter" >
             <span class="icon-twitter">Twitter</span>
         </a>
-        <a  class="horizontal-share-buttons" href="http://www.reddit.com/submit?url={{site.url}}{{page.url}}"
+        <a  class="horizontal-share-buttons" href="http://www.reddit.com/submit?url=https://vangalamaheshh.github.io{{page.url}}"
           onclick="gtag('event', 'Reddit', {'event_category':'Post Shared','event_label':'Reddit'}); window.open(this.href, 'pop-up', 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;"
           title="Share on Reddit" >
           <span class="icon-reddit">Reddit</span>
         </a>
-        <a  class="horizontal-share-buttons" href="https://www.linkedin.com/shareArticle?mini=true&url={{site.url}}{{page.url}}"
+        <a  class="horizontal-share-buttons" href="https://www.linkedin.com/shareArticle?mini=true&url=https://vangalamaheshh.github.io{{page.url}}"
           onclick="gtag('event', 'LinkedIn', {'event_category':'Post Shared','event_label':'LinkedIn'}); window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"
           title="Share on LinkedIn" >
           <span class="icon-linkedin">LinkedIn</span>
