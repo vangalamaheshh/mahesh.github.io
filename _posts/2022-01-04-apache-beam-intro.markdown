@@ -65,7 +65,7 @@ Happy Coding!! :+1:
             title="Share on Facebook" >
             <span class="icon-facebook2">Facebook</span>
         </a>
-        <a  class="horizontal-share-buttons" target="_blank" href="https://twitter.com/intent/tweet?text=Apache-Spark Installation&url=https://vangalamaheshh.github.io{{page.url}}"
+        <a  class="horizontal-share-buttons" target="_blank" href="https://twitter.com/intent/tweet?text=Apache Beam - Intro!&url=https://vangalamaheshh.github.io{{page.url}}"
             onclick="gtag('event', 'Twitter', {'event_category':'Post Shared','event_label':'Twitter'}); window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"
             title="Share on Twitter" >
             <span class="icon-twitter">Twitter</span>
