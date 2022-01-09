@@ -231,6 +231,8 @@ As you notice, when you list the files in /mnt, you will see 7 output files crea
 
 This simple example demonstrates the power of `Apache Beam` programming model and SDKs in parallelizing complex workflows in distributed computing environment so effortlessly. 
 
+![beam-pardo](/assets/images/beam-pardo.png)
+
 Happy Coding!! :+1:
 
 <a href="https://www.buymeacoffee.com/MaheshVangala" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
