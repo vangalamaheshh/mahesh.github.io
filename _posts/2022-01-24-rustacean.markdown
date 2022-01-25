@@ -129,7 +129,115 @@ fn main() {
 }
 {% endhighlight %}
 
-// Coming up ... Vectors and more
+Vectors
+========
+Vectors are homogenous and they get stored on heap, which means they can grow/shrink in size. The elements in vector can be accessed using [] or with get method, for example, v[0] or v.get(0). 
+
+{% highlight rust %}
+fn main() {
+    let v = vec![1,2,3,4,5]; // implicit way of initializing a vector
+    println!("{:?}", v); // prints [1, 2, 3, 4, 5]
+    let mut v: Vec<String> = Vec::new();
+    v.push(String::from("Hello"));
+    v.push(String::from("world"));
+    println!("{:?}", v); // prints ["Hello", "world"]
+    // Accessing values from Vector
+    let hello: &str = &v[0]; // reference to 1st element of the vector
+    println!("{}", hello); // prints Hello
+    match v.get(0) {
+        Some(elem) => println!("{}", elem), // prints Hello
+        None => println!("Index out of bounds error."), // never get to this since 0th index is valid
+    }
+    // Let's try an index that doesn't exist
+    match v.get(100) {
+        Some(elem) => println!("{}", elem),
+        None => println!("Index out of bounds error."), // this gets invoked
+    }
+}
+{% endhighlight %}
+
+```
+Output:
+[1, 2, 3, 4, 5]
+["Hello", "world"]
+Hello
+Hello
+Index out of bounds error.
+```
+
+Looping through ```Vector``` using ```iterator```.
+
+{% highlight rust %}
+fn main() {
+    let mut v: Vec<i32> = vec![1,2,3,4,5];
+    // loop through using iterator
+    // read-only
+    for i in &v {
+        print!("{} ", i);
+    }
+    println!("");
+    println!("{:?}", v);
+    // mutate
+    for i in &mut v {
+        *i *= 2;
+        print!("{} ", i);
+    }
+    println!("");
+    println!("{:?}", v);
+}
+{% endhighlight %}
+
+
+```
+Output:
+1 2 3 4 5
+[1, 2, 3, 4, 5]
+2 4 6 8 10
+[2, 4, 6, 8, 10]
+```
+
+Though ```Vector``` is homogenous, we can hack using ```enums``` to store heterogenous data elements.
+
+{% highlight rust %}
+use std::fmt;
+
+fn main() {
+    enum Person {
+        Age(i32),
+        Height(f64),
+        Name(String),
+    }
+
+    impl fmt::Display for Person {
+        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+            match *&self {
+                Person::Age(v) => write!(f, "Age: {}", v),
+                Person::Height(v) => write!(f, "Height: {}", v),
+                Person::Name(v) => write!(f, "Name: {}", v),
+            }
+        }
+    }
+
+    let dexter = vec![
+        Person::Name(String::from("Dexter Morgan")),
+        Person::Age(38),
+        Person::Height(5.11),
+    ];
+
+    for info in &dexter {
+        println!("{}", info);
+    }
+}
+{% endhighlight %}
+
+```
+Output:
+Name: Dexter Morgan
+Age: 38
+Height: 5.11
+```
+
+// More on ```Strings``` next. Stay tuned ...
 
 Happy Coding in ```Rust```!! :+1:
 
