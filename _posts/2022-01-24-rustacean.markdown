@@ -237,7 +237,79 @@ Age: 38
 Height: 5.11
 ```
 
-// More on ```Strings``` next. Stay tuned ...
+Strings
+========
+
+```Rust's``` core ```str``` and ```String``` standard library.
+
+{% highlight rust %}
+fn main() {
+  // core str 
+  let s: str = "Hello there!"; // this errors out with: expected `str`, found `&str`
+  let s: &str = "Hello there!"; // this passes - string literal will always be used with `&str`
+  println!("{}", s);
+  let c = s; // two variables, s and c - both point to same `str` heap
+  println!("{}", s);
+  println!("{}", c);
+  // String library
+  let s: String = String::from("Hello there"); // proper ownership as opposed to borrowing/reference/pointer.
+  let c = &s; // borrowing
+  println!("{}", s);
+  println!("{}", c);
+  let c = s; // Move of ownership - NOT borrowing
+  println!("{}", c);
+  println!("{}", s); // this errors out with: ^ value borrowed here after move
+}
+{% endhighlight %}
+
+Using `+` operator and `format!` macro.
+
+{% highlight rust %}
+fn main() {
+  let mut s: String = "Hello there".to_string();
+  s.push_str(", mate"); // appends a string literal
+  s.push('!'); // appends a character
+  let s1 = s; // Move of ownership; `s` is no longer valid.
+  println!("{}", s1);
+  let s2 = "How are you?";
+  let s3 = s1 + s2; // s1 is no longer valid; + operator acutally uses `fn add(self, s: &str) -> String;`
+  println!("{}", s3);
+  let format_string = format!("{}-{}-{}", "Hello there, mate!", s2, s3);
+  println!("{}", format_string);
+  println!("{}; {}", s2, s3); // s2 and s3 are still valid
+}
+{% endhighlight %}
+
+```
+Output:
+Hello there, mate!
+Hello there, mate!How are you?
+Hello there, mate!-How are you?-Hello there, mate!How are you?
+How are you?; Hello there, mate!How are you?
+```
+
+```String``` indexing and slices
+
+{% highlight rust %}
+fn main() {
+  let s = "Hello there".to_string();
+  let h = &s[0]; // errors out with: ^^^^ `String` cannot be indexed by `{integer}` 
+  let sub_string = &s[0..5];
+  println!("{}", sub_string);
+  for c in s.chars() {
+    print!("{}", c);
+  }
+  println!("");
+}
+{% endhighlight %}
+
+```
+Output:
+Hello
+Hello there
+```
+
+```String``` indexing doesn't work in ```Rust``` because under the hood it uses ```Vec<u8>```. Since, they support UTF-8, a character can be more than 1 byte. 
 
 Happy Coding in ```Rust```!! :+1:
 
