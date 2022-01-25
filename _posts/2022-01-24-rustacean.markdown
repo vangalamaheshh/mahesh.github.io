@@ -36,6 +36,99 @@ Rust Resources
 * <a href="https://docs.rs/datafusion/latest/datafusion/" target="_blank">Datafusion</a>: Data science in Rust!
 * <a href="https://github.com/libp2p/rust-libp2p/tree/master/examples" target="_blank">LibP2P</a>: Peer-to-Peer Applications in Rust!
 
+I try to share some of the topics that I found intriguing in ```Rust``` especially coming from ```Java```, ```Perl``` and ```Python``` background. An FYI - I will continually update this post with more and more snippets as I go.
+
+Variables - Immutable, Mutables & Shadowing
+============================================
+
+{% highlight rust %}
+fn main() {
+  let x = 1;
+  println!("{}", x); // prints 1
+  x = 2; // errors out since x is immutable
+  println!("{}", x); 
+}
+{% endhighlight %}
+
+```
+Compilation error:
+x = 2; // errors out since x is immutable
+^^^^^ cannot assign twice to immutable variable
+```
+
+{% highlight rust %}
+fn main() {
+    let mut x = 1;
+    println!("{}", x); // prints 1
+    x = 2; // it works since x is now mutable
+    println!("{}", x); // prints 2
+}
+{% endhighlight %}
+
+{% highlight rust %}
+fn main() {
+    let x = 1;
+    println!("{}", x); // prints 1
+    {
+        let x = 2; // shadowing 
+        println!("{}", x); // prints 2
+    }
+    println!("{}", x); // prints 1
+}
+{% endhighlight %}
+
+
+Constants
+==========
+
+{% highlight rust %}
+fn main() {
+    const MINUTES_IN_A_DAY: usize = 60 * 24; // this works
+    println!("{}", MINUTES_IN_A_DAY);
+    const SECONDS_IN_DAY: usize = get_seconds_in_day(); // this does not
+    println!("{}", SECONDS_IN_DAY);
+}
+
+pub fn get_seconds_in_day() -> usize {
+    return 60 * 60 * 24;
+}
+{% endhighlight %}
+
+```
+Compilation error:
+const SECONDS_IN_DAY: usize = get_seconds_in_day();
+calls in constants are limited to constant functions, tuple structs and tuple variants
+```
+
+Character
+=========
+A ```char``` is denoted by single quotes while ```String``` by double quotes. A ```char``` in ```Rust``` is 4 bytes in size and can store not just ASCII but unicode values.
+
+Tuples
+=======
+A Tuple can be heterogenous. A tuple has to be fixed in size. Tuple values are accessed using either dot notation or by unpacking. A tuple can be empty - (). Tuples get stored on stack.
+
+{% highlight rust %}
+fn main() {
+    let t: (i32, f32, String, char) = (10, 64.2, String::from("Hello"), '!');
+    println!("{}, {}, {}, {}", t.0, t.1, t.2, t.3);
+}
+{% endhighlight %}
+
+Arrays
+=======
+Arrays are homogenous and are fixed in size. Arrays get stored on stack. Array elements are accessed using [], for example, array[0].
+
+{% highlight rust %}
+fn main() {
+    let array: [&str;2] = ["Jan", "Feb"];
+    println!("{:?}", array);
+    let array = [1,2,3,4,5]; // remember shadowing; otherwise compiler throws error as the variable declared as immutable
+    println!("{:?}", array);
+    println!("The length of array is: {}", array.len()); // prints 5
+}
+{% endhighlight %}
+
 Happy Coding in ```Rust```!! :+1:
 
 <a href="https://www.buymeacoffee.com/MaheshVangala" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
