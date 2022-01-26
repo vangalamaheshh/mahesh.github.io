@@ -30,6 +30,7 @@ fn main() {
 Rust Resources
 ===============
 * <a href="https://doc.rust-lang.org/stable/book/" target="_blank">The Book</a>: Rust fundamentals to advanced concepts - all in one!
+* <a href="https://doc.rust-lang.org/rust-by-example/index.html" target="_blank">Rust by Example</a>: Rust concepts with demo code.
 * <a href="https://tokio.rs/tokio/tutorial" target="_blank">Tokio</a>: Async programming with Rust!
 * <a href="https://actix.rs/" target="_blank">Actix Web</a>: Web programming with Rust!
 * <a href="https://async-graphql.github.io/async-graphql/en/index.html" target="_blank">Async-Graphql</a>: Building GraphQL APIs with Rust!
@@ -365,7 +366,104 @@ Value: Doe
 }
 ```
 
+Enums
+======
 
+{% highlight rust %}
+fn main() {
+  enum Person {
+    Name(String),
+  }
+
+  // implement a method on Person enum
+  impl Person {
+    fn greet(&self) -> () {
+      match self {
+        Person::Name(s) => println!("Hello, {}!", s),
+      }
+    }
+  }
+
+  let person1 = Person::Name("John Doe".to_string());
+  person1.greet(); // prints: Hello, John Doe!
+}
+{% endhighlight %}
+
+{% highlight rust %}
+fn main() {
+  enum Coin {
+    Penny,
+    Nickel,
+    Dime,
+    Quarter,
+  }
+
+  fn value_in_cents(coin: Coin) -> u8 {
+    match coin {
+        Coin::Penny => 1,
+        Coin::Nickel => 5,
+        Coin::Dime => 10,
+        Coin::Quarter => 25,
+    }
+  }
+
+  println!("The value of Penny is: {} cents", value_in_cents(Coin::Penny));
+  println!("The value of Nickel is: {} cents", value_in_cents(Coin::Nickel));
+  println!("The value of Dime is: {} cents", value_in_cents(Coin::Dime));
+  println!("The value of Quarter is: {} cents", value_in_cents(Coin::Quarter));
+}
+{% endhighlight %}
+
+Structs
+========
+
+```Structs``` and ```Enums``` make up powerful features of ```Rust```. 
+
+{% highlight rust %}
+use std::fmt;
+
+fn main() {
+  struct Person {
+    name: String,
+    age: u32,
+    city: String
+  }
+  
+  impl fmt::Display for Person {
+    fn fmt(self: &Self, f: &mut fmt::Formatter) -> fmt::Result {
+      write!(f, "{} lives in {} and is {} years old.", self.name, self.city, self.age)
+    }
+  }
+
+  impl Person {
+    fn is_older(&self, other: &Person) -> bool {
+      return self.age > other.age
+    }
+  }
+  
+  let p1 = Person {
+    name: String::from("Dexter Morgan"),
+    age: 38,
+    city: String::from("Miami"),
+  };
+  
+  println!("{}", p1);
+
+  let p2 = Person {
+    name: String::from("Deborah Morgan"),
+    age: 32,
+    city: String::from("Miami"),
+  };
+
+  println!("{}", p1.is_older(&p2));
+} 
+{% endhighlight %}
+
+```
+Output:
+Dexter Morgan lives in Miami and is 38 years old.
+true
+```
 
 Happy Coding in ```Rust```!! :+1:
 
