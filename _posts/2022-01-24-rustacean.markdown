@@ -311,6 +311,63 @@ Hello there
 
 ```String``` indexing doesn't work in ```Rust``` because under the hood it uses ```Vec<u8>```. Since, they support UTF-8, a character can be more than 1 byte. 
 
+Hash Maps (a.k.a Associative Arrays or Dictionaries)
+=====================================================
+
+Hashes get stored on heap. Hashes are homogenous in nature.
+
+{% highlight rust %}
+use std::collections::HashMap;
+  
+fn main() {
+  let mut h = HashMap::new();
+  h.insert("john", "doe");
+  h.insert("jane", "doe");
+  println!("{:#?}", h);
+  // using zip method
+  let fnames: Vec<String> = vec![String::from("John"), "Jane".to_string()];
+  let lnames: Vec<String> = vec!["Doe".to_string(); fnames.len()];
+  let h: HashMap<_, _> = fnames.into_iter().zip(lnames.into_iter()).collect();
+  for (k, v) in &h {
+    println!("Key: {}; Value: {}", k, v);
+  }
+  // using get method
+  match h.get(&String::from("John")) {
+    Some(v) => println!("Value: {}", v),
+    None => println!("No such key."),
+  }
+  // word count example
+  let text: String = "Hello hello, how are you, mate?".to_string();
+  let mut word_count: HashMap<String, u32> = HashMap::new();
+  for s in text.to_lowercase().replace(",", "").split(" ") {
+    let count = word_count.entry(s.to_string()).or_insert(0);
+    *count += 1;
+  }
+  println!("{:#?}", word_count);
+}
+
+{% endhighlight %}
+
+```
+Output:
+{
+    "jane": "doe",
+    "john": "doe",
+}
+Key: Jane; Value: Doe
+Key: John; Value: Doe
+Value: Doe
+{
+    "mate?": 1,
+    "are": 1,
+    "hello": 2,
+    "how": 1,
+    "you": 1,
+}
+```
+
+
+
 Happy Coding in ```Rust```!! :+1:
 
 <a href="https://www.buymeacoffee.com/MaheshVangala" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
