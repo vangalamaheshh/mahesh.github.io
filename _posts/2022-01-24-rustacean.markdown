@@ -100,12 +100,12 @@ const SECONDS_IN_DAY: usize = get_seconds_in_day();
 calls in constants are limited to constant functions, tuple structs and tuple variants
 ```
 
-Character
-=========
+<h1><a href="https://doc.rust-lang.org/std/primitive.char.html" target="_blank">Character</a></h1>
+
 A ```char``` is denoted by single quotes while ```String``` by double quotes. A ```char``` in ```Rust``` is 4 bytes in size and can store not just ASCII but unicode values.
 
-Tuples
-=======
+<h1><a href="https://doc.rust-lang.org/std/primitive.tuple.html" target="_blank">Tuples</a></h1>
+
 A Tuple can be heterogenous. A tuple has to be fixed in size. Tuple values are accessed using either dot notation or by unpacking. A tuple can be empty - (). Tuples get stored on stack.
 
 {% highlight rust %}
@@ -115,8 +115,8 @@ fn main() {
 }
 {% endhighlight %}
 
-Arrays
-=======
+<h1><a href="https://doc.rust-lang.org/std/primitive.array.html" target="_blank">Arrays</a></h1>
+
 Arrays are homogenous and are fixed in size. Arrays get stored on stack. Array elements are accessed using [], for example, array[0].
 
 {% highlight rust %}
@@ -129,8 +129,8 @@ fn main() {
 }
 {% endhighlight %}
 
-Vectors
-========
+<h1><a href="https://doc.rust-lang.org/std/vec/struct.Vec.html" target="_blank">Vectors</a></h1>
+
 Vectors are homogenous and they get stored on heap, which means they can grow/shrink in size. The elements in vector can be accessed using [] or with get method, for example, v[0] or v.get(0). 
 
 {% highlight rust %}
@@ -237,8 +237,7 @@ Age: 38
 Height: 5.11
 ```
 
-Strings
-========
+<h1><a href="https://doc.rust-lang.org/stable/std/string/struct.String.html#" target="_blank">Strings</a></h1>
 
 ```Rust's``` core ```str``` and ```String``` standard library.
 
@@ -311,8 +310,8 @@ Hello there
 
 ```String``` indexing doesn't work in ```Rust``` because under the hood it uses ```Vec<u8>```. Since, they support UTF-8, a character can be more than 1 byte. 
 
-Hash Maps (a.k.a Associative Arrays or Dictionaries)
-=====================================================
+<h1><a href="https://doc.rust-lang.org/std/collections/struct.HashMap.html" target="_blank">Hash Maps</a></h1> ```(a.k.a Associative Arrays or Dictionaries)```
+
 
 Hashes get stored on heap. Hashes are homogenous in nature.
 
