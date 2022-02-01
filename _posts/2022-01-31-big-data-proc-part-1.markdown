@@ -54,6 +54,91 @@ Let's get to work to add a form so that user can enter ```movie``` and/or ```act
 
 ![ui-a](/assets/images/big-data-part-1-ui-a.png)
 
+We are going to use ```Angular Material``` to style our webpage, so let's go ahead and install it first. Inside the docker container run,
+
+{% highlight bash %}
+ng add @angular/material
+{% endhighlight %}
+
+Add the following ```Material``` modules to ```src/app/app.module.ts``` file.
+
+{% highlight javascript %}
+// ...
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatIconModule} from '@angular/material/icon';
+import {MatCardModule} from '@angular/material/card';
+// ...
+imports: [
+    BrowserModule,
+    //....
+    BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatCardModule
+  ],
+//...
+{% endhighlight %}
+
+Add the following code to ```app.component.ts``` and ```app.component.html``` files, respectively.
+
+{% highlight javascript %}
+// src/app/app.component.ts
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
+})
+export class AppComponent implements OnInit {
+
+  public msg: string = "Big-Data-Demo using IMDB Dataset";
+  public actor: string = "";
+  public movie: string = "";
+
+  constructor() { }
+
+  ngOnInit(): void { }
+
+  public formSubmit(form: any) {
+    console.log(form);
+  }
+}
+{% endhighlight %}
+
+{% highlight html %}
+// src/app/app.component.html
+<h1 style="text-align: center;">{{msg}}</h1>
+<form #form = "ngForm" (ngSubmit) = "formSubmit(form.value)" >
+<mat-card style="text-align: center;">
+    <mat-card-content>
+        <mat-form-field appearance="outline">
+            <mat-label>Actor Name</mat-label>
+            <input matInput type="text" name = "actor" placeholder="Actor Name ..." ngModel>
+            <mat-icon matSuffix>recent_actors</mat-icon>
+            <mat-hint>Example: Brad Pitt</mat-hint>
+        </mat-form-field><br/>
+        <p>and/or</p>
+        <mat-form-field appearance="outline">
+            <mat-label>Movie Name</mat-label>
+            <input matInput type="text" name = "movie" placeholder="Movie Name ..." ngModel>
+            <mat-icon matSuffix>movie</mat-icon>
+            <mat-hint>Example: Pulp Fiction</mat-hint>
+        </mat-form-field><br/>
+        <button mat-raised-button color="primary" style="margin-right:5px;">Submit</button>
+	    <button type="reset" mat-raised-button color="primary" style="margin-right:5px;">Reset</button>
+    </mat-card-content>
+</mat-card>
+</form>
+{% endhighlight %}
+
+<b>Disclaimer:</b> You should be using <a href="https://angular.io/api/forms/FormControl" target="_blank">Form Controls</a>, <a href="https://angular.io/api/forms/FormGroup" target="_blank">Form Groups</a> and <a href="https://angular.io/guide/form-validation" target="_blank">Form Validations</a> for a production app. We are only covering the bare essentials to get the big picture going.
+
 Happy Coding! :+1:
 
 <a href="https://www.buymeacoffee.com/MaheshVangala" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
