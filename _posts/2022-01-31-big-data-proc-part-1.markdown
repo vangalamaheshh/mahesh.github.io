@@ -9,7 +9,12 @@ categories: Blog Data-Engineering Big-Data Full-Stack
 
 In this post, let's go over the creation of web application to capture user behavior. ```Docker``` and `compose` are required if you want to simulate the work. 
 
-# Web-Client
+Our app will soon take shape as showed below. So, let's get started. <br/>
+
+<div style="padding: 10px; display: block;">
+<iframe src="/assets/videos/imdb-app.mp4" height="315px" width="560px" allowfullscreen="" frameborder="0" style="align: center;">
+</iframe>
+</div>
 
 {% highlight docker %}
 FROM ubuntu:21.04 
