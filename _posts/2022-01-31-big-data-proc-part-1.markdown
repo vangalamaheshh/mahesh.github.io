@@ -5,9 +5,11 @@ date:   2022-01-31
 categories: Blog Data-Engineering Big-Data Full-Stack  
 ---
 
-# Web-App to capture/generate data
+## Web-App to capture/generate data
 
 In this post, let's go over the creation of web application to capture user behavior. ```Docker``` and `compose` are required if you want to simulate the work. 
+
+# Web-Client
 
 {% highlight docker %}
 FROM ubuntu:21.04 
@@ -23,32 +25,32 @@ RUN set -ex \
 CMD ["tail -f /dev/null"]
 {% endhighlight %}
 
-Save this into a file named ```Dockerfile``` and run,
+Save this into a file named ```angular.Dockerfile``` and run,
 
 ```
-docker build -t my-angular .
-docker run --name angular --rm -it -p 4000:4000 -v $PWD:/usr/local/bin/angular my-angular bash 
+docker build -t my-angular -f angular.Dockerfile .
+docker run --name angular --rm -it -p 4000:4000 -v $PWD:/usr/local/bin/imdb-app my-angular bash 
 ```
 
-We have mounted the ```current directory``` as ```/usr/local/bin/angular``` in our docker container so as to persist our work. Later, we will use ```compose``` to bring up the whole environment in a single command. 
+We have mounted the ```current directory``` as ```/usr/local/bin/imdb-app``` in our docker container so as to persist our work. Later, we will use ```compose``` to bring up the whole environment in a single command. 
 
 Let's generate our app scaffolding with,
 
 {% highlight bash %}
-cd /usr/local/bin/angular
-ng new imdb-app --routing=true --style=scss
+cd /usr/local/bin/imdb-app
+ng new angular --routing=true --style=scss
 {% endhighlight %}
 
 Now, run the application using,
 {% highlight bash %}
-cd /usr/local/bin/angular/imdb-app
+cd /usr/local/bin/imdb-app/angular
 echo '<h1>Hello, World!</h1>' >src/app/app.component.html 
 ng serve --watch --port 4000 --host 0.0.0.0
 {% endhighlight %}
 
 In your web browser, visiting <a>http://localhost:4000</a> should show a ```Hello, World!``` message.
 
-We will be editing the files in ```<your current directory/imdb-app/``` below. You should see this webpage refresh automagically as you make edits to these files.
+We will be editing the files in ```<your current directory/imdb-app/angular``` below. You should see this webpage refresh automagically as you make edits to these files.
 
 Let's get to work to add a form so that user can enter ```movie``` and/or ```actor``` on the webpage. We'll edit the ```app.component.(html/ts)``` files. Once we are done, the page will look as showed below.
 
@@ -106,7 +108,8 @@ export class AppComponent implements OnInit {
   ngOnInit(): void { }
 
   public formSubmit(form: any) {
-    console.log(form);
+    /* To Do */
+    // Post <form values> to the IMDB server endpoint 
   }
 }
 {% endhighlight %}
@@ -138,6 +141,69 @@ export class AppComponent implements OnInit {
 {% endhighlight %}
 
 <b>Disclaimer:</b> You should be using <a href="https://angular.io/api/forms/FormControl" target="_blank">Form Controls</a>, <a href="https://angular.io/api/forms/FormGroup" target="_blank">Form Groups</a> and <a href="https://angular.io/guide/form-validation" target="_blank">Form Validations</a> for a production app. We are only covering the bare essentials to get the big picture going.
+
+Okay, so with that we've got our UI all set so as to gather input parameters required to fetch the actor/movie information from IMDB dataset we have downloaded <a href="https://vangalamaheshh.github.io/blog/data-engineering/big-data/full-stack/2022/01/30/big-data-proc-overview.html" target="_blank">as explained in this post</a>.
+
+Now, it's time to bring our server side application to life and serve IMDB actor/movie information based on user input.
+
+# Web-Server
+
+{% highlight docker %}
+FROM python:3.9.10-slim-buster
+RUN set -ex \
+    && apt-get update -y \
+    && pip install graphene flask flask-cors \
+    && pip install flask-graphql pandas
+# a foreground process to keep the container alive
+CMD ["tail -f /dev/null"]
+{% endhighlight %}
+
+Save this into a file named ```flask.Dockerfile``` and run,
+
+{% highlight python %}
+docker build -t my-flask -f flask.Dockerfile .
+docker run --name flask --rm -it -p 8080:8080 -v $PWD:/usr/local/bin/imdb-app my-flask bash 
+mkdir /usr/local/bin/imdb-app/flask && cd $_
+cat <<EOF 1>server.py
+#!/usr/bin/env python
+
+from flask import Flask, request
+from flask_cors import CORS
+import json
+
+app = Flask(__name__)
+
+cors = CORS(app, resources = {
+  r"/*": {
+    "origins": [
+      "http://localhost:4200"
+    ]}
+  })
+
+app.debug = True
+
+@app.route("/")
+def hello_world():
+  return '<h1>Hello, World!</h1>', 200
+
+@app.route("/FetchInfo", methods = ['POST'])
+def fetch_info():
+  actor = request.form.get('actor', None)
+  movie = request.form.get('movie', None)
+  return json.dumps({
+    "error": None,
+    "msg": None,
+    "data": {'actor': actor, 'movie': movie}
+  }), 200
+
+if __name__ == "__main__":
+  app.run(debug=True, host="0.0.0.0", port="8080")
+EOF
+# Run flask server
+python server.py
+{% endhighlight %}
+ 
+Pointing your web browser to <a>http://localhost:8080/</a>, you should see ```Hello, World!``` message. 
 
 Happy Coding! :+1:
 
