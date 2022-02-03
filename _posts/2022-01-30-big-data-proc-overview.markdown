@@ -209,7 +209,7 @@ The output looks like as showed below. (only few rows are showed ...)
 
 ![actors_info](/assets/images/actors.png)
 
-Okay, we've got our baseline setup. We'll explore building a web-application in the upcoming <b><a href="https://vangalamaheshh.github.io/blog/data-engineering/big-data/full-stack/2022/01/31/big-data-proc-part-1.html" target="_blank">Part-1</a></b> of this series. Stay tuned!!
+Okay, we've got our baseline setup. We'll explore building a web-application in the upcoming <b><a href="https://vangalamaheshh.github.io/blog/data-engineering/big-data/full-stack/2022/02/02/big-data-proc-part-1.html" target="_blank">Part-1</a></b> of this series. Stay tuned!!
 
 Happy Coding! :+1:
 
