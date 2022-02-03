@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Big-Data-Processing (FullStack & beyond) Part-1"
-date:   2022-01-31
+date:   2022-02-02
 categories: Blog Data-Engineering Big-Data Full-Stack  
 ---
 
@@ -15,6 +15,8 @@ Our app will soon take shape as showed below. So, let's get started. <br/>
 <iframe src="/assets/videos/imdb-app.mp4" height="315px" width="560px" allowfullscreen="" frameborder="0" style="align: center;">
 </iframe>
 </div>
+
+# Web-Client
 
 {% highlight docker %}
 FROM ubuntu:21.04 
@@ -34,10 +36,10 @@ Save this into a file named ```angular.Dockerfile``` and run,
 
 ```
 docker build -t my-angular -f angular.Dockerfile .
-docker run --name angular --rm -it -p 4000:4000 -v $PWD:/usr/local/bin/imdb-app my-angular bash 
+docker run --name angular --rm -it -p 4200:4200 -v $PWD:/usr/local/bin/imdb-app my-angular bash 
 ```
 
-We have mounted the ```current directory``` as ```/usr/local/bin/imdb-app``` in our docker container so as to persist our work. Later, we will use ```compose``` to bring up the whole environment in a single command. 
+We have mounted the ```current directory``` as ```/usr/local/bin/imdb-app``` in our docker container so as to persist our work.  
 
 Let's generate our app scaffolding with,
 
@@ -50,10 +52,10 @@ Now, run the application using,
 {% highlight bash %}
 cd /usr/local/bin/imdb-app/angular
 echo '<h1>Hello, World!</h1>' >src/app/app.component.html 
-ng serve --watch --port 4000 --host 0.0.0.0
+ng serve --watch --port 4200 --host 0.0.0.0
 {% endhighlight %}
 
-In your web browser, visiting <a>http://localhost:4000</a> should show a ```Hello, World!``` message.
+In your web browser, visiting <a>http://localhost:4200</a> should show a ```Hello, World!``` message.
 
 We will be editing the files in ```<your current directory/imdb-app/angular``` below. You should see this webpage refresh automagically as you make edits to these files.
 
@@ -76,6 +78,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatTableModule} from '@angular/material/table';
 // ...
 imports: [
     BrowserModule,
@@ -86,7 +90,9 @@ imports: [
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    MatCardModule
+    MatCardModule,
+    MatProgressSpinnerModule,
+    MatTableModule
   ],
 //...
 {% endhighlight %}
@@ -121,7 +127,7 @@ export class AppComponent implements OnInit {
 
 {% highlight html %}
 // src/app/app.component.html
-<h1 style="text-align: center;">{{msg}}</h1>
+<h1 style="text-align: center;">{% raw %}{{msg}}{% endraw %}</h1>
 <form #form = "ngForm" (ngSubmit) = "formSubmit(form.value)" >
 <mat-card style="text-align: center;">
     <mat-card-content>
@@ -191,16 +197,6 @@ app.debug = True
 def hello_world():
   return '<h1>Hello, World!</h1>', 200
 
-@app.route("/FetchInfo", methods = ['POST'])
-def fetch_info():
-  actor = request.form.get('actor', None)
-  movie = request.form.get('movie', None)
-  return json.dumps({
-    "error": None,
-    "msg": None,
-    "data": {'actor': actor, 'movie': movie}
-  }), 200
-
 if __name__ == "__main__":
   app.run(debug=True, host="0.0.0.0", port="8080")
 EOF
@@ -209,6 +205,198 @@ python server.py
 {% endhighlight %}
  
 Pointing your web browser to <a>http://localhost:8080/</a>, you should see ```Hello, World!``` message. 
+
+It's time to grab the <a href="https://vangalamaheshh.github.io/blog/data-engineering/big-data/full-stack/2022/01/30/big-data-proc-overview.html" target="_blank">imdb_process.py</a> and place it in ```imdb-app/flask/modules/``` folder. We will use this module in the ```API end point``` we are going to add to our ```server.py``` below.
+
+Also, move ```actors.tsv``` and ```movies.tsv``` imdb datasets to ```imdb-app/flask/assets/imdb_data/``` folder.
+
+{% highlight python %}
+#server.py
+#...
+from modules import imdb_process
+import pandas as pd
+#------- LOAD THE DATASET INTO MEMORY ------------#
+info = imdb_process.get_datasets()
+#...
+
+@app.route("/FetchInfo", methods = ['POST'])
+def fetch_info():
+  actor = request.form.get('actor', None)
+  movie = request.form.get('movie', None)
+  results = pd.DataFrame()
+  if actor:
+    results = info['actor'][info['actor'].primaryName.isin(actor.split(','))]
+    results = imdb_process.fetch_info(info['actor'][info['actor'].primaryName.isin(actor.split(','))], info['movie'])
+  if movie:
+    results = results.append(imdb_process.fetch_info(info['actor'], info['movie'][info['movie'].primaryTitle.isin(movie.split(','))]))
+  results = results[imdb_process.get_cols_original()]
+  results.columns = imdb_process.get_cols_modified()
+  results = json.loads(results.drop_duplicates().to_json(orient="values"))
+  return json.dumps({
+    "error": None,
+    "msg": None,
+    "data": results,
+    "header": imdb_process.get_cols_modified()
+  }), 200
+
+#...
+
+{% endhighlight %}
+
+Now, our web-server is ready to serve the movies' information of the actors requested.
+
+# Web-Client
+
+Let's test this new feature using our web-client application. But first, we need to add some code to UI.
+
+Import ```HttpClientModule``` in our ```app.module.ts``` file.
+
+{% highlight javascript %}
+//...
+import { HttpClientModule } from  '@angular/common/http';
+//...
+imports: [
+    BrowserModule,
+    HttpClientModule,
+    //...
+{% endhighlight %}
+
+Create ```movie.service.ts``` file in ```src/app/services/``` folder and add the code below.
+
+{% highlight javascript %}
+import { Injectable } from '@angular/core';
+import { HttpClient } from  '@angular/common/http';
+import { Observable } from  'rxjs';
+import {map} from 'rxjs/operators';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class MovieService {
+
+  private url = "http://localhost:8080/";
+
+  constructor(private http: HttpClient) { }
+
+  getHello(): Observable<any> {
+    return this.http.get(this.url).pipe(map(res => res));
+  }
+
+  getInfo(form: any): Observable<any> {
+    let params = new FormData();
+    params.append('actor', form["actor"]);
+    params.append('movie', form["movie"]);
+    return this.http.post(this.url + 'FetchInfo', params).pipe(map(res => res));
+  }
+}
+{% endhighlight %}
+
+Now, let's make use of ```movie.service.ts``` in ```app.component.ts```.
+
+{% highlight javascript %}
+//...
+import { MovieService } from './services/movie.service';
+//...
+  public header: string[] = [];
+  public data: string[] = [];
+  public loading: boolean = false;
+
+  constructor(private movieService: MovieService) { }
+  //...
+  public formSubmit(form: any) {
+    this.loading = true;
+    this.movieService.getInfo(form).subscribe(res => {
+      this.header = res.header;
+      this.data = res.data;
+      this.loading = false;
+    }, err => {
+      this.loading = false;
+      console.log(err);
+    });
+  }
+{% endhighlight %}
+
+Finally, let's add a bit of code to ```app.component.html``` and ```app.component.scss``` files, respectively.
+
+{% highlight html %}
+// app.component.html
+// ...
+<div *ngIf="loading || data.length > 0" class="container mat-elevation-z8">
+    <div *ngIf="loading" class="loading">
+      <mat-spinner *ngIf="loading"></mat-spinner>
+    </div>
+    <div class="table-container">
+      <table mat-table [dataSource]="data" class="table">
+          <ng-container *ngFor="let column of header; let i = index;" [matColumnDef]="column">
+            <th mat-header-cell *matHeaderCellDef>
+                {% raw %}{{column}}{% endraw %}
+            </th>
+            <td mat-cell *matCellDef="let row">
+                {% raw %}{{row[i]}}{% endraw %}
+            </td>
+          </ng-container>
+        <tr mat-header-row *matHeaderRowDef="header; sticky: true;"></tr>
+        <tr mat-row *matRowDef="let row; columns: header;"></tr>
+      </table>
+    </div>
+</div>
+{% endhighlight %}
+
+{% highlight css %}
+// app.component.scss
+.container {
+    padding-top: 20px;
+    position: relative;
+}
+  
+.table-container {
+    position: relative;
+    justify-content: center;
+    min-height: 200px;
+    max-height: 50vh;
+    overflow: auto;
+}
+  
+table {
+    width: 100%;
+}
+  
+.loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 56px;
+    right: 0;
+    background: rgba(0, 0, 0, 0.15);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+  
+  
+/* Column Widths */
+.mat-column-number,
+.mat-column-state,
+.mat-header-cell {
+    max-width: 124px;
+    min-width: 124px;
+}
+  
+.mat-column-created {
+    max-width: 124px;
+}
+{% endhighlight %}
+
+Recompile the Angular app (just in case, if you are having any issues), using,
+
+{% highlight bash %}
+ng serve --watch --port 4200 --host 0.0.0.0
+{% endhighlight %}
+
+Just like that, we have a fully working web-application that serves the movies for the actors provided in the web-form.
+
+![ui-part-b](/assets/images/big-data-part-1-ui-b.png)
 
 Happy Coding! :+1:
 
@@ -224,7 +412,7 @@ Happy Coding! :+1:
             title="Share on Facebook" >
             <span class="icon-facebook2">Facebook</span>
         </a>
-        <a  class="horizontal-share-buttons" target="_blank" href="https://twitter.com/intent/tweet?text=Big Data Processing (FullStack & beyond) - Overview&url=https://vangalamaheshh.github.io{{page.url}}"
+        <a  class="horizontal-share-buttons" target="_blank" href="https://twitter.com/intent/tweet?text=Big Data Processing (FullStack and beyond) Part-1&url=https://vangalamaheshh.github.io{{page.url}}"
             onclick="gtag('event', 'Twitter', {'event_category':'Post Shared','event_label':'Twitter'}); window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"
             title="Share on Twitter" >
             <span class="icon-twitter">Twitter</span>

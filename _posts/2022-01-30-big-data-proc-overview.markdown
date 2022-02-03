@@ -88,12 +88,6 @@ Let's download <a href="https://datasets.imdbws.com/" target="_blank">IMDB Datas
 {% highlight python %}
 #!/usr/bin/env python
 
-#-----------------------------
-# @author: Mahesh Vangala
-# @date: Jan, 30, 2022
-# @license: <MIT + Apache 2.0>
-#-----------------------------
-
 """
 Fetch actors and their movie information from IMDB source files
 
@@ -105,6 +99,12 @@ Arguments
 
 If both --movies and --actors are provided, returns full cast of the movies provided and full movies of actors privided.
 """
+
+#-----------------------------
+# @author: Mahesh Vangala
+# @date: Jan, 29, 2022
+# @license: <MIT + Apache 2.0>
+#-----------------------------
 
 import sys
 import pandas as pd
@@ -166,6 +166,14 @@ def get_cols_modified():
           'movieId','movieName','isAdultMovie','movieStartYear','movieEndYear','movieRuntimeMinutes','movieGenres']
   return cols
 
+def get_datasets():
+  ACTOR_FILE = "assets/imdb_data/actors.tsv"
+  MOVIE_FILE = "assets/imdb_data/movies.tsv"
+  actor_info = pd.read_csv(ACTOR_FILE, sep = "\t", header = 0)
+  movie_info = pd.read_csv(MOVIE_FILE, sep = "\t", header = 0)
+  movie_info = movie_info[movie_info.titleType == 'movie']
+  return {"actor": actor_info, "movie": movie_info} 
+
 if __name__ == "__main__":
   (args, rest_of_args) = parse_args()
   actor_info = pd.read_csv(args.actor_file, sep = "\t", header = 0)
@@ -183,6 +191,7 @@ if __name__ == "__main__":
   results = results[get_cols_original()]
   results.columns = get_cols_modified()
   results.drop_duplicates().to_csv(args.outfile, sep = ",", header = True, index = False)
+
 {% endhighlight %}
 
 Save this code to ```imdb_process.py``` and run as,
@@ -200,7 +209,7 @@ The output looks like as showed below. (only few rows are showed ...)
 
 ![actors_info](/assets/images/actors.png)
 
-Okay, we've got our baseline setup. We'll explore building a web-client in the upcoming <b>Part-1</b> of this series. Stay tuned!!
+Okay, we've got our baseline setup. We'll explore building a web-application in the upcoming <b><a href="https://vangalamaheshh.github.io/blog/data-engineering/big-data/full-stack/2022/01/31/big-data-proc-part-1.html" target="_blank">Part-1</a></b> of this series. Stay tuned!!
 
 Happy Coding! :+1:
 
