@@ -12,8 +12,7 @@ In this post, let's go over the creation of web application to capture user beha
 Our app will soon take shape as showed below. So, let's get started. <br/>
 
 <div style="padding: 10px; display: block;">
-<iframe src="/assets/videos/imdb-app.mp4" height="315px" width="560px" allowfullscreen="" frameborder="0" style="align: center;">
-</iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/hv1dYyDTIT0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
 # Web-Client
