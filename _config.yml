@@ -20,6 +20,7 @@
 
 title: Hello, I am Mahesh Vangala.
 email: vangalamaheshh@gmail.com
+google_analytics: UA-219520908-1
 description: >- # this means to ignore newlines until "baseurl:"
   A programming enthusiast with interest and experience in Data Engineering, Full Stack Web Development, Data Science and Clinical Informatics fields.
 baseurl: "" # the subpath of your site, e.g. /blog
