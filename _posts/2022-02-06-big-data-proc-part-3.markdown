@@ -7,9 +7,13 @@ categories: Blog Data-Engineering Big-Data Full-Stack
 
 ## Web Sockets & Kafka Streams
 
-In <a href="https://vangalamaheshh.github.io/blog/data-engineering/big-data/full-stack/2022/02/04/big-data-proc-part-2.html" target="_blank">Part-2</a>, we have seen our web app integrated with graph database via an API layer. Now, users can get the movies info of their favorite actors or the cast of their favorite movies using the web form.
+In <a href="https://vangalamaheshh.github.io/blog/data-engineering/big-data/full-stack/2022/02/04/big-data-proc-part-2.html" target="_blank">Part-2</a>, we have seen our web app getting integrated with graph database via an API layer. Now, users can get the movies info of their favorite actors or the cast of their favorite movies using the web form with out much data latency.
 
-In order to explore processing this data further (now, we are getting ourselves warmed up to the core big data stack), we think of a trivial sounding use case of streaming the results back to the server for processing. The main goal of this post is to delve into the details of ```Web Sockets``` and ```Kafka Streams```.
+In order to explore processing this data further (now, we are getting ourselves warmed up to the core big data stack), we will stream the results back to the server for processing. As trivial as this usecase may sound, this post does cover the hands on details into ```Web Sockets``` and ```Kafka Streams```. Following video demonstrates the learning outcomes of this post with respect to ```Sockets & Streams```.
+
+<div style="padding: 10px;">
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/dvGP9uR-MVk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
 
 As far as my experience goes with ```Web Sockets``` in ```Python```, ```Rust``` and ```NodeJs```, nothing beats ```NodeJs``` websocket library - <a href="https://www.npmjs.com/package/ws" target="_blank">```ws```</a> - especially in working seamlessly with web client frameworks such as ```Angular```. And, thanks to ```Microservices Based Architecture``` with ```Docker```, it is ever so easy to glue together systems of different languages cohesively so that we are using best of the benefits programming language ecosystem has to offer.
 
