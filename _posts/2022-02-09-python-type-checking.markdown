@@ -11,6 +11,8 @@ Because of this, most often than not, a project in ```Python``` which starts out
 
 It's almost with shame I admit, I can't believe why I did not pay attention to ```Python Types and Tests``` and embrace those as part of daily coding life, until now. As I had this light bulb going off moment for myself, I wanted to share a thing or two of my learnings into ```Python Type Checking & Doc Tests```. So, here we go ....
 
+![type-checks](/assets/images/type-checks.png)
+
 # Type-Checking
 
 Let's explore a ```Stack``` (abstract) data type and include type-checks. Later we will add doc-tests to it and run the tests.
