@@ -111,6 +111,8 @@ Howdy
 Stack is empty.
 ```
 
+![doc-tests](/assets/images/doc-tests.png)
+
 # Doc Tests
 
 Let's add doc tests ...
