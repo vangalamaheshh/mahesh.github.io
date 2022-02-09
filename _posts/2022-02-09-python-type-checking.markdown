@@ -5,11 +5,11 @@ date:   2022-02-09
 categories: Blog Programming Languages Python  
 ---
 
-Let's be honest, as much as we all love ```Python```, because of it's syntactical sugar and the dynamic nature of the language helping in quickly vrooming off from idea to prototype to production and then to analytics and beyond. It's not a hyperbole to say that ```Python``` has taken over the pinnacle of Mount Coderest.
+It's not a hyperbole to say that ```Python``` has taken over the pinnacle of Mount Coderest, especially so in data science world if not in others. Let's also be honest, as much as we all love ```Python```, because of it's syntactical sugar and the dynamic nature of the language helping in quickly vrooming off from idea to prototype to production and then to analytics and beyond, there are certain pain points (in my opinion) associated with it's maintenance as the codebase gets larger and larger. Libraries like ```Pandas``` and ```numpy``` use ```dtype``` to circumvent these shortcomings, but the core python itself continues to be sans type-checks.
 
-Most often than not, a project in ```Python``` starts out as a quick script to test the waters and before you know it, you are debugging a production system with codebase the size of a football field. Those are the long days (and nights) when the dynamic nature of ```Python```, the very feature that earned ```Python``` it's accolades, becomes a nightmarish scenario until you fix those pesky bugs. By then, if you are anything like me, end up having ```print``` and ```stderr``` statements all over, strewn like landmines of a battlefield.
+Because of this, most often than not, a project in ```Python``` which starts out as a quick script to test the waters and before you know it, you are debugging a production system with codebase the size of a football field. Those are the long days (and nights) when the dynamic nature of ```Python```, the very feature that earned ```Python``` it's accolades, becomes a nightmarish scenario until you fix those pesky bugs. By then, if you are anything like me, end up having ```print``` and ```stderr``` statements all over, strewn like landmines of a battlefield.
 
-It's almost with shame I admit, I can't believe why I did not pay attention to ```Python Types and Tests``` and embrace those as part of daily coding life. I am glad I am now. As I had this light bulb going off moment for myself, I wanted to share a thing or two of my learnings into ```Python Type Checking & Doc Tests```. So, here we go ....
+It's almost with shame I admit, I can't believe why I did not pay attention to ```Python Types and Tests``` and embrace those as part of daily coding life, until now. As I had this light bulb going off moment for myself, I wanted to share a thing or two of my learnings into ```Python Type Checking & Doc Tests```. So, here we go ....
 
 # Type-Checking
 
