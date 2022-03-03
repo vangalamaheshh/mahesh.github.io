@@ -42,7 +42,7 @@ This is an overview of multi-part posts in this effort. We cover the following i
 <br/>
 - <u>Learning outcomes</u>:
   - <a href="https://neo4j.com/" target="_blank">```Neo4J```</a>
-7. <b>Data analyis & Visualization.</b>
+7. <b>Data analysis & Visualization.</b>
 <br/>
 - <u>Learning outcomes</u>:
   - <a href="https://jupyter.org/" target="_blank">```Jupyter Notebooks```</a>
