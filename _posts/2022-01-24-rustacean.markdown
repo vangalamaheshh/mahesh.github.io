@@ -107,7 +107,7 @@ A ```char``` is denoted by single quotes while ```String``` by double quotes. A 
 
 <h1><a href="https://doc.rust-lang.org/std/primitive.tuple.html" target="_blank">Tuples</a></h1>
 
-A Tuple can be heterogenous. A tuple has to be fixed in size. Tuple values are accessed using either dot notation or by unpacking. A tuple can be empty - (). Tuples get stored on stack.
+A Tuple can be heterogeneous. A tuple has to be fixed in size. Tuple values are accessed using either dot notation or by unpacking. A tuple can be empty - (). Tuples get stored on stack.
 
 {% highlight rust %}
 fn main() {
@@ -118,7 +118,7 @@ fn main() {
 
 <h1><a href="https://doc.rust-lang.org/std/primitive.array.html" target="_blank">Arrays</a></h1>
 
-Arrays are homogenous and are fixed in size. Arrays get stored on stack. Array elements are accessed using [], for example, array[0].
+Arrays are homogeneous and are fixed in size. Arrays get stored on stack. Array elements are accessed using [], for example, array[0].
 
 {% highlight rust %}
 fn main() {
@@ -132,7 +132,7 @@ fn main() {
 
 <h1><a href="https://doc.rust-lang.org/std/vec/struct.Vec.html" target="_blank">Vectors</a></h1>
 
-Vectors are homogenous and they get stored on heap, which means they can grow/shrink in size. The elements in vector can be accessed using [] or with get method, for example, v[0] or v.get(0). 
+Vectors are homogeneous and they get stored on heap, which means they can grow/shrink in size. The elements in vector can be accessed using [] or with get method, for example, v[0] or v.get(0). 
 
 {% highlight rust %}
 fn main() {
@@ -197,7 +197,7 @@ Output:
 [2, 4, 6, 8, 10]
 ```
 
-Though ```Vector``` is homogenous, we can hack using ```enums``` to store heterogenous data elements.
+Though ```Vector``` is homogeneous, we can hack using ```enums``` to store heterogeneous data elements.
 
 {% highlight rust %}
 use std::fmt;
@@ -314,7 +314,7 @@ Hello there
 <h1><a href="https://doc.rust-lang.org/std/collections/struct.HashMap.html" target="_blank">Hash Maps</a></h1> ```(a.k.a Associative Arrays or Dictionaries)```
 
 
-Hashes get stored on heap. Hashes are homogenous in nature.
+Hashes get stored on heap. Hashes are homogeneous in nature.
 
 {% highlight rust %}
 use std::collections::HashMap;
