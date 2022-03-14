@@ -31,6 +31,7 @@ Rust Resources
 ===============
 * <a href="https://doc.rust-lang.org/stable/book/" target="_blank">The Book</a>: Rust fundamentals to advanced concepts - all in one!
 * <a href="https://doc.rust-lang.org/rust-by-example/index.html" target="_blank">Rust by Example</a>: Rust concepts with demo code.
+* <a href="https://doc.rust-lang.org/reference/introduction.html" target="_blank">Rust Doc</a>: Rust Documentation.
 * <a href="https://tokio.rs/tokio/tutorial" target="_blank">Tokio</a>: Async programming with Rust!
 * <a href="https://actix.rs/" target="_blank">Actix Web</a>: Web programming with Rust!
 * <a href="https://async-graphql.github.io/async-graphql/en/index.html" target="_blank">Async-Graphql</a>: Building GraphQL APIs with Rust!
